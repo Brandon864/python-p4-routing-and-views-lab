@@ -8,21 +8,15 @@ def index():
 
 @app.route('/print/<string:param>')
 def print_string(param):
-    print(param)
-    return param
+    print(param)  # Print to console
+    return param  # Display in browser
 
 @app.route('/count/<int:param>')
 def count(param):
     return '\n'.join(str(i) for i in range(param)) + '\n'
 
-@app.route('/math/<num1>/<operation>/<num2>')
+@app.route('/math/<float:num1>/<operation>/<float:num2>')
 def math(num1, operation, num2):
-    try:
-        num1 = float(num1)
-        num2 = float(num2)
-    except ValueError:
-        return "Invalid number format", 400
-
     if operation == '+':
         result = num1 + num2
     elif operation == '-':
@@ -35,13 +29,6 @@ def math(num1, operation, num2):
         result = num1 % num2
     else:
         return "Invalid operation", 400
-
-    # For division, always return float with one decimal place
-    if operation == 'div':
-        return f"{result:.1f}"
-    # For other operations, return integer string if result is whole, else float
-    if result.is_integer():
-        return str(int(result))
     return str(result)
 
 if __name__ == '__main__':
